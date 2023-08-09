@@ -1,5 +1,6 @@
 import servicesRouter from './routes/servicesRoutes.js'
 import dotenv from 'dotenv'
+import colors from 'colors'
 import { db } from './config/db.js'
 import express from 'express'; //ESM
 
@@ -20,5 +21,5 @@ const PORT = process.env.PORT || 4000
 
 //Arrancar la app
 app.listen(PORT, () => {
-    console.log(`El servidor se esta ejecutando en el puerto: ${PORT}`)
+    console.log(colors.blue(`El servidor se esta ejecutando en el puerto: ${PORT}`))
 })

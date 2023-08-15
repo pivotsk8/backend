@@ -19,7 +19,14 @@ async function seedDB() {
 }
 
 async function clearDB() {
-    console.log('clear')
+    try {
+        await Services.deleteMany()
+        console.log(colors.red.bold('Se eliminaron los datos'))
+        process.exit()
+    } catch (error) {
+        console.log(error)
+        process.exit(1)
+    }
 }
 
 process.argv[2] === '--import' ? seedDB() : clearDB()

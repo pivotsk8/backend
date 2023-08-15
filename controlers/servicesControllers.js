@@ -18,7 +18,6 @@ const createService = async (req, res) => {
     }
 }
 
-
 const getServices = async (req, res) => {
     const result = Services.find({})
     console.log(result)
@@ -39,6 +38,7 @@ const getServiceById = async (req, res) => {
     //Mostrar el servicio
     res.json(service)
 }
+
 const updateService = async (req, res) => {
     const { id } = req.params
     //Validar que el id exista
@@ -63,9 +63,30 @@ const updateService = async (req, res) => {
     }
 }
 
+const deleteService = async (req, res) => {
+    const { id } = req.params
+    //Validar que el id exista
+    if (validateObjectId(id, res)) return
+
+    const service = await Services.findById(id)
+    if (!service) {
+        return handleNotFoundError('El servicio no exite', res);
+    }
+
+    try {
+        await service.deleteOne()
+        return res.json({
+            msg: 'El servicio se elimino correctamente'
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export {
     createService,
     getServices,
     getServiceById,
-    updateService
+    updateService,
+    deleteService
 }

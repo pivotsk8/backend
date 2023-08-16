@@ -1,6 +1,7 @@
 import servicesRouter from './routes/servicesRoutes.js'
 import dotenv from 'dotenv'
 import colors from 'colors'
+import cors from 'cors'
 import { db } from './config/db.js'
 import express from 'express'; //ESM
 
@@ -10,11 +11,28 @@ dotenv.config()
 // Configuracion la app
 const app = express()
 
-//Leer datos body
-app.use(express.json())
 
 //Conectar a la DB
 db()
+
+//configurar CORS
+const whiteList = [process.env.FRONTEND_URL]
+
+process.argv[2] === '--postman' ? whiteList.push(undefined) : whiteList
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whiteList.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(new Error('Error de CORS'))
+        }
+    }
+}
+app.use(cors(corsOptions))
+
+//Leer datos body
+app.use(express.json())
 
 //Definir una ruta
 app.use('/api/services', servicesRouter)

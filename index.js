@@ -1,4 +1,5 @@
 import servicesRouter from './routes/servicesRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import cors from 'cors'
@@ -36,6 +37,7 @@ app.use(express.json())
 
 //Definir una ruta
 app.use('/api/services', servicesRouter)
+app.use('/api/auth', authRoutes)
 
 //Definir puerto
 const PORT = process.env.PORT || 4000

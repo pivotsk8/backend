@@ -38,6 +38,44 @@ const register = async (req, res) => {
 
 }
 
+const verifyAccount = async (req, res) => {
+    const { token } = req.params
+
+    const error = new Error('hubo un error, token no valido')
+    const user = await User.findOne({ token })
+    if (!user) {
+        return res.status(401).json({ msg: error.message })
+    }
+
+    // Si el token es valido, confirmar la cuenta
+    try {
+        user.verified = true
+        user.token = ''
+        await user.save()
+        res.json({ msg: 'Usuraio Confirmado Correctamente' })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const login = async (req, res) => {
+    const { email, password } = req.body
+
+    //verificar que el usuario existe
+    const error = new Error('El Usuario no existe')
+    const user = await User.findOne({ email })
+    if (!user) {
+        return res.status(401).json({ msg: error.message })
+    }
+
+    //Revisar si el usuario confirma su cuenta
+    if (!user.verified) {
+        return res.status(401).send({ msg: error.message = "Tu cuenta no ha sido confirmada aun" })
+    }
+}
+
 export {
-    register
+    register,
+    verifyAccount,
+    login
 }

@@ -1,5 +1,6 @@
 import User from '../models/User.js'
 import { sendEmailVerification } from '../emails/authEmailService.js'
+import { generateJWT } from '../utils/index.js'
 
 const register = async (req, res) => {
     const error = new Error('Todos los campos son obligatorios')
@@ -76,7 +77,8 @@ const login = async (req, res) => {
     //Comprobar el passeword
 
     if (await user.checkPassword(password)) {
-        return res.json({ msg: error.message = "Usuario Autenticado" })
+        const token = generateJWT(user._id)
+        res.json({ token })
     }
 
     if (!await user.checkPassword(password)) {

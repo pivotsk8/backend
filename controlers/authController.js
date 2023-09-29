@@ -65,6 +65,7 @@ const login = async (req, res) => {
     //verificar que el usuario existe
     const error = new Error('El Usuario no existe')
     const user = await User.findOne({ email })
+
     if (!user) {
         return res.status(401).json({ msg: error.message })
     }
@@ -86,8 +87,13 @@ const login = async (req, res) => {
     }
 }
 
+const user = async (req, res) => {
+    console.log('desde user')
+}
+
 export {
     register,
     verifyAccount,
-    login
+    login,
+    user
 }

@@ -6,7 +6,7 @@ const appointmentSchema = mongoose.Schema({
         ref: 'Services'
     }],
     date: {
-        type: String
+        type: Date
     },
     time: {
         type: String

@@ -39,7 +39,7 @@ app.use(express.json())
 //Definir una ruta
 app.use('/api/services', servicesRouter)
 app.use('/api/auth', authRoutes)
-app.use('/api/appointment', appointmentRoutes)
+app.use('/api/appointments', appointmentRoutes)
 
 //Definir puerto
 const PORT = process.env.PORT || 4000

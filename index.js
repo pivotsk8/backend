@@ -1,5 +1,6 @@
 import servicesRouter from './routes/servicesRoutes.js'
 import authRoutes from './routes/authRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 import appointmentRoutes from './routes/appointmentRoutes.js'
 import dotenv from 'dotenv'
 import colors from 'colors'
@@ -40,6 +41,7 @@ app.use(express.json())
 app.use('/api/services', servicesRouter)
 app.use('/api/auth', authRoutes)
 app.use('/api/appointments', appointmentRoutes)
+app.use('/api/users', userRoutes)
 
 //Definir puerto
 const PORT = process.env.PORT || 4000

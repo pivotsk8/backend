@@ -14,7 +14,7 @@ const getUserAppointments = async (req, res) => {
             date: {
                 $gte: new Date()
             }
-        }).populate('services')
+        }).populate('services').sort({ date: 'asc' })
         res.json(appointment)
     } catch (error) {
 

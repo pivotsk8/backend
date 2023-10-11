@@ -1,7 +1,11 @@
 import { parse, formatISO, startOfDay, endOfDay, isValid } from 'date-fns'
 import Appointment from '../models/Appointment.js'
 import { validateObjectId, handleNotFoundError, formatDate } from '../utils/index.js'
-import { sendEmailNewAppointment, sendEmailUpdateAppointment } from '../emails/appointmentsEmailServices.js'
+import {
+    sendEmailNewAppointment,
+    sendEmailUpdateAppointment,
+    sendEmailCancelledAppointment
+} from '../emails/appointmentsEmailServices.js'
 
 
 const createAppointment = async (req, res) => {
@@ -120,8 +124,12 @@ const deleteAppointment = async (req, res) => {
     }
 
     try {
-        await appointment.deleteOne()
+        const result = await appointment.deleteOne()
 
+        await sendEmailCancelledAppointment({
+            date: formatDate(result.date),
+            time: result.time
+        })
         res.json({ msg: 'Citas Cancelada Exitosamente' })
     } catch (error) {
         console.log(error)

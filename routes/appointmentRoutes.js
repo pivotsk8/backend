@@ -1,5 +1,10 @@
 import express from 'express'
-import { createAppointment, getAppointmentsByData, getAppointmentById } from '../controlers/appointmentContoller.js'
+import {
+    createAppointment,
+    getAppointmentsByData,
+    getAppointmentById,
+    updateAppointment
+} from '../controlers/appointmentContoller.js'
 import authMiddleware from '../middleware/authMiddleware.js'
 
 const router = express.Router()
@@ -10,5 +15,6 @@ router.route('/')
 
 router.route('/:id')
     .get(authMiddleware, getAppointmentById)
+    .put(authMiddleware, updateAppointment)
 
 export default router

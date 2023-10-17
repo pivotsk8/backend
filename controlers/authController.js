@@ -114,15 +114,18 @@ const forgotPassword = async (req, res) => {
         console.log(error)
     }
 }
+
 const verifyPasswordResetToken = async (req, res) => {
     const { token } = req.params
 
     const isValidToken = await User.findOne({ token })
     const error = new Error('Hubo un error, Token no valido')
 
-    !isValidToken
-        ? res.status(400).json({ msg: error.message })
-        : res.json({ msg: 'Token Valido' })
+    if (!isValidToken) {
+        return res.status(400).json({ msg: error.message })
+    }
+
+    res.json({ msg: 'Token Valido' })
 }
 
 const updatePassword = async (req, res) => { console.log('soy update') }

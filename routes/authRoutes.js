@@ -4,6 +4,7 @@ import {
     verifyAccount,
     login,
     user,
+    admin,
     forgotPassword,
     verifyPasswordResetToken,
     updatePassword
@@ -23,6 +24,7 @@ router.route('/forgot-password/:token')
 
 //Area privada - requiere un JWT
 router.get('/user', authMiddleware, user)
+router.get('/admin', authMiddleware, admin)
 
 
 export default router

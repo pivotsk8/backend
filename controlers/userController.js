@@ -10,7 +10,11 @@ const getUserAppointments = async (req, res) => {
 
     try {
         const query = req.user.admin ? { date: { $gte: new Date() } } : { user, date: { $gte: new Date() } }
-        const appointment = await Appointment.find(query).populate('services').sort({ date: 'asc' })
+        const appointment = await Appointment
+            .find(query)
+            .populate('services')
+            .populate({ path: 'user', select: 'name email' })
+            .sort({ date: 'asc' })
         res.json(appointment)
     } catch (error) {
 
